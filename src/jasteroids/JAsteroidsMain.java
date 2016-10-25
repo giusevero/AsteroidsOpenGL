@@ -86,20 +86,22 @@ public class JAsteroidsMain implements GLEventListener, KeyListener, MouseListen
             
             //foguete
             gl.glPushMatrix();
-                gl.glScalef(1.5f, 1.0f, 3.0f);
+                gl.glScalef(1.5f, 1.5f, 3.0f);
                 glut.glutWireCube(1.0f);
             gl.glPopMatrix();
 
             //bico foguete
             gl.glPushMatrix();
-                
+                gl.glScalef(1.0f, 1.0f, -1.0f);
+                gl.glTranslatef(0.0f, 0.0f, 1.0f);
+                glut.glutWireCone(1, 3, 8, 8);
             gl.glPopMatrix();
             
             //turbinas foguete
-            gl.glPushMatrix();
-                gl.glTranslatef (1.0f, 1.0f, 0.0f);
-                glut.glutWireCube(0.3f);
-            gl.glPopMatrix();
+//            gl.glPushMatrix();
+//                gl.glTranslatef (1.0f, 1.0f, 0.0f);
+//                glut.glutWireCube(0.3f);
+//            gl.glPopMatrix();
             
         
         gl.glPopMatrix();
