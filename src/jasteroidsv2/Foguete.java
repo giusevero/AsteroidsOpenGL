@@ -1,24 +1,27 @@
-package jasteroids;
+package jasteroidsv2;
 
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
 
-public class Foguete{
-
-    private double esqdir = 0, cimbaix = 0, dist = 0;
-    //teste
-    private double teste = 0;
-  
+public class Foguete {
+    
+    private float posX=0.0f;
+    private float posY=0.0f;
+    private float posZ=0.0f;
+    private float vel=0.0f;
+    
     public void desenhaFoguete(GL2 gl, GLUT glut){
+        
         gl.glPushMatrix();
             gl.glScalef(1f, 1f, 1f);
-            gl.glTranslatef((float)esqdir, (float)cimbaix, (float)dist);
-            gl.glRotatef((float) teste, 1.0f, 0.0f, 0.0f);
+            gl.glTranslatef( getPosX(), getPosY()-5, getPosZ());
+            gl.glRotatef(0, 0.0f, 0.0f, 0.0f);
             
         //foguete
             //corpo
             gl.glPushMatrix();
-                gl.glScalef(1.0f, 1.0f, 3.0f);
+                gl.glScalef(1.0f, 1.0f, -3.0f);
                 gl.glTranslatef(0.0f, 0.0f, 0.0f);
                 glut.glutWireCylinder(1, 1, 8, 6);
             gl.glPopMatrix();
@@ -30,35 +33,37 @@ public class Foguete{
             gl.glPopMatrix();
             //base inferior
             gl.glPushMatrix();
-                gl.glScalef(1.0f, 1.0f, 0.01f);
+                gl.glScalef(1.0f, 1.0f, -0.01f);
                 gl.glTranslatef(0.0f, 0.0f, 300.0f);
                 glut.glutWireCone(1, 3, 8, 8);
             gl.glPopMatrix();
 
         //bico foguete
             gl.glPushMatrix();
-                gl.glScalef(1.0f, 1.0f, -0.75f);
+                gl.glColor4f(0f,1f,1f,1f);
+                gl.glScalef(1.0f, 1.0f, 0.75f);
                 gl.glTranslatef(0.0f, 0.0f, 0.0f);
                 glut.glutWireCone(1, 3, 8, 8);
             gl.glPopMatrix();
             
+            gl.glColor4f(1, 1, 1, 1);
         //turbinas foguete
             //direita superior
             gl.glPushMatrix();
                 gl.glScalef(0.25f, 0.25f, -1.0f);
-                gl.glTranslatef (1.0f, 1.0f, -3.25f);
+                gl.glTranslatef (1.0f, 1.0f, 3.0f);
                 glut.glutWireCylinder(1, 0.25, 10, 1);
             gl.glPopMatrix();
             //esquerda superior
             gl.glPushMatrix();
                 gl.glScalef(0.25f, 0.25f, -1.0f);
-                gl.glTranslatef (-1.0f, 1.0f, -3.25f);
+                gl.glTranslatef (-1.0f, 1.0f, 3.0f);
                 glut.glutWireCylinder(1, 0.25, 10, 1);
             gl.glPopMatrix();
             //inferior
             gl.glPushMatrix();
                 gl.glScalef(0.25f, 0.25f, -1.0f);
-                gl.glTranslatef (0.0f, -1.0f, -3.25f);
+                gl.glTranslatef (0.0f, -1.0f, 3.0f);
                 glut.glutWireCylinder(1, 0.25, 10, 1);
             gl.glPopMatrix();
             
@@ -66,56 +71,55 @@ public class Foguete{
             //superior
             gl.glPushMatrix();
                 gl.glScalef(0.1f, 0.35f, -1.0f);
-                gl.glTranslatef (0.0f, 3.0f, -2.5f);
+                gl.glTranslatef (0.0f, 3.0f, 2.5f);
                 glut.glutWireCube(1.0f);
             gl.glPopMatrix();
+            //direita
             gl.glPushMatrix();
-                gl.glScalef(0.1f, 0.35f, -1.0f);
-                gl.glTranslatef(3.0f, 0.0f, -2.5f);
+                gl.glScalef(0.35f, 0.1f, -1.0f);
+                gl.glTranslatef(3.0f, 0.0f, 2.5f);
+                glut.glutWireCube(1.0f);
+            gl.glPopMatrix();
+            //esquerda
+            gl.glPushMatrix();
+                gl.glScalef(0.35f, 0.1f, -1.0f);
+                gl.glTranslatef(-3.0f, 0.0f, 2.5f);
                 glut.glutWireCube(1.0f);
             gl.glPopMatrix();
           
         gl.glPopMatrix();
     }
     
-    public void moveDireita() {
-        esqdir = (esqdir + 0.5) % 360;
-        System.out.println("TECLA D");
-    }
-
-    public void moveEsquerda() {
-        esqdir = (esqdir - 0.5) % 360;
-        System.out.println("TECLA A");
+    public float getPosX(){
+        return posX;
     }
     
-    public void moveCima() {
-        cimbaix = (cimbaix + 0.5) % 360;
-        System.out.println("TECLA W");
+    public void setPosX(float posX){
+        this.posX = posX;
     }
     
-    public void moveBaixo() {
-        cimbaix = (cimbaix - 0.5) % 360;
-        System.out.println("TECLA S");
+    public float getPosY(){
+        return posY;
     }
     
-    public void distanciaMenos() {
-        dist = (dist + 0.5) % 360;
-        System.out.println("BOTAO DIREITO");
+    public void setPosY(float posY){
+        this.posY = posY;
     }
     
-    public void distanciaMais() {
-        dist = (dist - 0.5) % 360;
-        System.out.println("BOTAO ESQUERDO");
+    public float getPosZ(){
+        return posZ;
     }
     
-    public void teste1() {
-        teste = (teste + 1) % 360;
-        System.out.println("DEG = " + teste);
+    public void setPosZ(float posZ){
+        this.posZ = posZ;
     }
     
-    public void teste2() {
-        teste = (teste - 1) % 360;
-        System.out.println("DEG = " + teste);
+    public float getVel(){
+        return vel;
+    }
+    
+    public void setVel(float vel){
+        this.vel = vel;
     }
     
 }
