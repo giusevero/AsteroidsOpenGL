@@ -18,6 +18,7 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 import com.jogamp.opengl.util.gl2.GLUT;
+import javax.swing.JFrame;
 
 public class JAsteroidsMain implements GLEventListener, KeyListener, MouseListener{
     
@@ -27,6 +28,13 @@ public class JAsteroidsMain implements GLEventListener, KeyListener, MouseListen
     private GLUT glut;
     
     public static void main(String[] args) {
+        
+        JFrame menu = new JFrame("JAsteroids");
+        menu.setSize(320, 480);
+        menu.setLocationRelativeTo(null);
+        menu.setResizable(false);
+        menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        menu.setVisible(true);
         
         GLProfile glp = GLProfile.getDefault();
         GLCapabilities caps = new GLCapabilities(glp);
