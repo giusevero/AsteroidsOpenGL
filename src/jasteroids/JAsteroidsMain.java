@@ -18,15 +18,15 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 import com.jogamp.opengl.util.gl2.GLUT;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class JAsteroidsMain implements GLEventListener, KeyListener, MouseListener{
     
     private GLU glu;
     private GLUT glut;
     private double esqdir = 0, cimbaix = 0, dist = 0;
-    private int teste = 0;
+    
+    //teste
+    private double teste = 0;
     
     public static void main(String[] args) {
         
@@ -82,26 +82,62 @@ public class JAsteroidsMain implements GLEventListener, KeyListener, MouseListen
         gl.glPushMatrix();
             gl.glScalef(1f, 1f, 1f);
             gl.glTranslatef((float)esqdir, (float)cimbaix, (float)dist);
-            gl.glRotatef((float) teste, 0.0f, 0.0f, 0.0f);
+            gl.glRotatef((float) teste, 0.0f, 1.0f, 0.0f);
             
             //foguete
             gl.glPushMatrix();
-                gl.glScalef(1.5f, 1.5f, 3.0f);
-                glut.glutWireCube(1.0f);
+                gl.glScalef(1.0f, 1.0f, 3.0f);
+                gl.glTranslatef(0.0f, 0.0f, 0.0f);
+                glut.glutWireCylinder(1, 1, 8, 6);
+            gl.glPopMatrix();
+            gl.glPushMatrix();
+                gl.glScalef(1.0f, 1.0f, 0.0f);
+                gl.glTranslatef(0.0f, 0.0f, 0.0f);
+                glut.glutWireCone(1, 3, 8, 8);
+            gl.glPopMatrix();
+            gl.glPushMatrix();
+                gl.glScalef(1.0f, 1.0f, 0.01f);
+                gl.glTranslatef(0.0f, 0.0f, 300.0f);
+                glut.glutWireCone(1, 3, 8, 8);
             gl.glPopMatrix();
 
             //bico foguete
             gl.glPushMatrix();
-                gl.glScalef(1.0f, 1.0f, -1.0f);
-                gl.glTranslatef(0.0f, 0.0f, 1.0f);
+                gl.glScalef(1.0f, 1.0f, -0.75f);
+                gl.glTranslatef(0.0f, 0.0f, 0.0f);
                 glut.glutWireCone(1, 3, 8, 8);
             gl.glPopMatrix();
             
             //turbinas foguete
-//            gl.glPushMatrix();
-//                gl.glTranslatef (1.0f, 1.0f, 0.0f);
-//                glut.glutWireCube(0.3f);
-//            gl.glPopMatrix();
+            gl.glPushMatrix();
+                gl.glScalef(0.25f, 0.25f, -1.0f);
+                gl.glTranslatef (1.0f, 1.0f, -3.25f);
+                glut.glutWireCylinder(1, 0.25, 10, 1);
+            gl.glPopMatrix();
+            gl.glPushMatrix();
+                gl.glScalef(0.25f, 0.25f, -1.0f);
+                gl.glTranslatef (-1.0f, 1.0f, -3.25f);
+                glut.glutWireCylinder(1, 0.25, 10, 1);
+            gl.glPopMatrix();
+            gl.glPushMatrix();
+                gl.glScalef(0.25f, 0.25f, -1.0f);
+                gl.glTranslatef (0.0f, -1.0f, -3.25f);
+                glut.glutWireCylinder(1, 0.25, 10, 1);
+            gl.glPopMatrix();
+            
+            //flaps foguete
+            gl.glPushMatrix();
+                gl.glScalef(0.1f, 0.35f, -1.0f);
+                gl.glTranslatef (0.0f, 3.0f, -2.5f);
+                glut.glutWireCube(1.0f);
+            gl.glPopMatrix();
+            gl.glPushMatrix();
+                gl.glScalef(0.1f, 0.35f, -1.0f);
+                gl.glTranslatef (0.0f, -3.0f, -2.5f);
+                gl.glRotatef(45, 0.0f, 0.0f, 1.0f);
+                glut.glutWireCube(1.0f);
+            gl.glPopMatrix();
+            
             
         
         gl.glPopMatrix();
@@ -113,7 +149,7 @@ public class JAsteroidsMain implements GLEventListener, KeyListener, MouseListen
         GL2 gl = drawable.getGL().getGL2();
 
         gl.glMatrixMode(GL2.GL_PROJECTION);
-        glu.gluPerspective(65.0, 600/600, 1.0, 100.0);
+        glu.gluPerspective(65.0, 600/600, 0.5, 200.0);
         gl.glTranslatef(0.0f, -1.0f, -8.0f);
         
     }
@@ -139,6 +175,12 @@ public class JAsteroidsMain implements GLEventListener, KeyListener, MouseListen
             case KeyEvent.VK_S:
                 moveBaixo();
                 break;
+            case KeyEvent.VK_NUMPAD1:
+                teste1();
+                break;
+            case KeyEvent.VK_NUMPAD2:
+                teste2();
+                break;
         }//fim switch
     }
     
@@ -147,6 +189,7 @@ public class JAsteroidsMain implements GLEventListener, KeyListener, MouseListen
 
     @Override
     public void mousePressed(MouseEvent e) {
+        
         switch(e.getButton())
         {
             case MouseEvent.BUTTON1:
@@ -186,6 +229,16 @@ public class JAsteroidsMain implements GLEventListener, KeyListener, MouseListen
     private void distanciaMais() {
         dist = (dist - 0.5) % 360;
         System.out.println("BOTAO ESQUERDO");
+    }
+    
+    private void teste1() {
+        teste = (teste + 1) % 360;
+        System.out.println("DEG = " + teste);
+    }
+    
+    private void teste2() {
+        teste = (teste - 1) % 360;
+        System.out.println("DEG = " + teste);
     }
 
     @Override
