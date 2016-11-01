@@ -1,5 +1,6 @@
 package jasteroidsv2;
 
+import Elementos.Foguete;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;

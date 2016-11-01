@@ -1,4 +1,4 @@
-package jasteroidsv2;
+package Elementos;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;

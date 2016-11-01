@@ -1,4 +1,4 @@
-package jasteroidsv2;
+package Menu;
 
 public class Menu {
     

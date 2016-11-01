@@ -1,4 +1,6 @@
-package jasteroidsv2;
+package Menu;
+
+import jasteroidsv2.JAsteroidsFrame;
 
 public class MenuMain {
 
