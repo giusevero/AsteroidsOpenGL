@@ -7,10 +7,18 @@ package Elementos;
 
 import Util.Posicao;
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
 import com.jogamp.opengl.util.gl2.GLUT;
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.TextureData;
+import com.jogamp.opengl.util.texture.TextureIO;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,10 +35,16 @@ public class Meteoro {
     float velocidade;
     float raio;
     float rotacao;
-    int textura;
+    
     boolean impacto;
     
-    GL2 Gl; 
+   Texture textura;
+   TextureData textura1;
+   TextureData textura2;
+    
+    
+    static GL2 Gl; 
+    static GLU Glu;
     GLUT glut;
 
     public Posicao getP() {
@@ -51,15 +65,36 @@ public class Meteoro {
 
     public Meteoro(){
         
-       // p = new Posicao(incX, incY, incX)
+       p = new Posicao(0, 0, 0);
        rotacao = r.nextInt(90);
        Reset();
+      
        
-       if(r.nextInt(2)==1){
+       
+        try {
+            InputStream stream1 = getClass().getResourceAsStream("/Texturas/asteroide1.jpg");
+            textura1 = TextureIO.newTextureData(GLProfile.getDefault(), stream1, false, "jpg");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            System.out.println("Erro na textura 1 "+ex.getMessage());
+        }
+        
            
-       }else{
+        try {
+             InputStream stream2 = getClass().getResourceAsStream("/Texturas/asteroide1.jpg");
+              textura2 = TextureIO.newTextureData(GLProfile.getDefault(), stream2, false, "jpg");
+        } catch (IOException ex) {
+             ex.printStackTrace();
+            System.out.println("Erro na textura 2 "+ex.getMessage());
+        }
+            if(r.nextInt(2)==1){
+ 
+                this.textura = TextureIO.newTexture(textura1);
+            }else{
            
-       }
+                this.textura = TextureIO.newTexture(textura2);
+            }
+        
            
     }
     
@@ -86,7 +121,7 @@ public class Meteoro {
             velocidade = (float)(r.nextDouble() * 0.1); 
      }
     
-     static public void Criar(GL2 Gl, GLU Glu)
+     static public void Criar()
         {
             GLUquadric quadratic = Glu.gluNewQuadric(); //Criar o objeto quadrico
             Glu.gluQuadricNormals(quadratic, Glu.GLU_SMOOTH);
@@ -109,8 +144,8 @@ public class Meteoro {
             p.x += incX;
             rotacao += 1f;
 
-            Gl.glEnable(Gl.GL_TEXTURE_2D);
-            Gl.glBindTexture(Gl.GL_TEXTURE_2D, textura);
+            textura.enable(Gl);
+            textura.bind(Gl);
  
             Gl.glPushMatrix();
                 Gl.glTranslatef(p.x, p.y, p.z);    
@@ -122,6 +157,7 @@ public class Meteoro {
             {
                 Reset();  
             }
-            Gl.glDisable(Gl.GL_TEXTURE_2D);  
+            textura.disable(Gl);
+            textura.destroy(Gl);
         }
 }

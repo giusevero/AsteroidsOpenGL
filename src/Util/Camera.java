@@ -52,7 +52,7 @@ public class Camera {
     
      public void SetPerspective()
         {
-            //Seleciono a matriz de projeção
+            //Seleciona a matriz de projeção
             Gl.glMatrixMode(Gl.GL_PROJECTION);
             //A reseto
             Gl.glLoadIdentity();
