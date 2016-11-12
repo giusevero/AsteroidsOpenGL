@@ -39,13 +39,8 @@ class HandlersJogo implements KeyListener, MouseListener{
             fog.setPosY(fog.getPosY()-0.5f);
             System.out.println("S");
         }
-        if (e.getKeyCode() == e.VK_Z) {
-            fog.setPosZ(fog.getPosZ()+0.5f);
-            System.out.println("Z");
-        }
-        if (e.getKeyCode() == e.VK_X) {
-            fog.setPosZ(fog.getPosZ()-0.5f);
-            System.out.println("X");
+        if (e.getKeyCode() == e.VK_ESCAPE) {
+            System.out.println("Pause");
         }
         
     }

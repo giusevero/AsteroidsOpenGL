@@ -18,7 +18,7 @@ public class JAsteroidsRender implements GLEventListener{
     private GLUT glut = new GLUT();
     private GLU glu= new GLU();
     
-    private int console = 0;
+    private int console = 0, controleMeteoro = 0;
     
     private Foguete fog;
 //    private Meteoro meteoro;
@@ -62,7 +62,11 @@ public class JAsteroidsRender implements GLEventListener{
         
         estrela.desenhaEstrela(gl);    
         meteoro.DesenhaMeteoros(gl);
-        meteoro.GerarMeteoro(glad, 2, false);
+        
+        //meteoro.GerarMeteoro(glad, 2, false);
+        controleMeteoro++;
+        meteoro.GeraMeteoro(glad, controleMeteoro);
+        
         estrela.desenhaEstrela(gl);
         gl.glFlush();
         

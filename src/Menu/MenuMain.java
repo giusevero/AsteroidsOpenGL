@@ -1,13 +1,14 @@
 package Menu;
 
-import jasteroidsv2.JAsteroidsFrame;
+import Menu.Menu;
 
 public class MenuMain {
 
     public static void main(String[] args) {
         
-        JAsteroidsFrame jast = new JAsteroidsFrame();
-        jast.start();
+        Menu start = new Menu();
+        start.iniciaMenu();
+
     }
     
 }

@@ -27,14 +27,22 @@ public class GeradorMeteoro {
         //listaMeteoro = new ArrayList<Meteoro>();
         if(apagar==true){
             listaMeteoro.clear();
-              
         }else{
             for(int i = 0; i < 1; i++){
                 listaMeteoro.add(new Meteoro(drawable));
-        }
+            }
             System.out.println(" "+listaMeteoro.size());
-    }
-}
+        }
+    }  
+    
+    public void GeraMeteoro(GLAutoDrawable drawable, int quant){
+        
+        if(quant % 30 == 0){
+            listaMeteoro.add(new Meteoro(drawable));
+            System.out.println(" "+listaMeteoro.size());
+        }
+        
+    }  
     
     public static boolean checarColisao(Foguete fog, float raio){
         
