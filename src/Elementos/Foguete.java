@@ -1,5 +1,6 @@
 package Elementos;
 
+import Util.Posicao;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
@@ -9,6 +10,7 @@ public class Foguete {
     private float posX=0.0f;
     private float posY=0.0f;
     private float posZ=0.0f;
+    public Posicao p = new Posicao(0, 0, 0);
     private float vel=0.0f;
     
     public void desenhaFoguete(GL2 gl, GLUT glut){

@@ -2,6 +2,7 @@ package jasteroidsv2;
 
 import Elementos.Estrela;
 import Elementos.Foguete;
+import Elementos.GeradorMeteoro;
 import Elementos.Meteoro;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
@@ -20,13 +21,14 @@ public class JAsteroidsRender implements GLEventListener{
     private int console = 0;
     
     private Foguete fog;
-    private Meteoro meteoro;
+//    private Meteoro meteoro;
     private Estrela estrela;
+    private GeradorMeteoro meteoro = new GeradorMeteoro();
     
     public JAsteroidsRender(){
         fog = new Foguete();
-        meteoro = new Meteoro();
-        estrela = new Estrela();
+        meteoro = new GeradorMeteoro();
+       estrela = new Estrela();
     }
     
     @Override
@@ -56,9 +58,12 @@ public class JAsteroidsRender implements GLEventListener{
         gl.glRotatef(0,0,1f,0);
         
         fog.desenhaFoguete(gl, glut);
-        meteoro.Desenha();
-        estrela.desenhaEstrela();
+//        meteoro.Desenha();
         
+        estrela.desenhaEstrela(gl);    
+        meteoro.DesenhaMeteoros(gl);
+        meteoro.GerarMeteoro(glad, 2, false);
+        estrela.desenhaEstrela(gl);
         gl.glFlush();
         
         //para controlar a saída do console

@@ -7,6 +7,7 @@ package Elementos;
 
 import Util.Posicao;
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
@@ -25,35 +26,30 @@ import java.util.logging.Logger;
  * @author Giu
  */
 public class Meteoro {
-    
-     //Variáveis
+
+    //Variáveis
     static int lista;
     Random r = new Random();
-    Posicao p;
+    
     float incX;
     float incY;
     float velocidade;
     float raio;
     float rotacao;
-    
+
+    private float posX = 0.0f;
+    private float posY = 0.0f;
+    private float posZ = 0.0f;
+
     boolean impacto;
-    
-   Texture textura;
-   TextureData textura1;
-   TextureData textura2;
-    
-    
-    static GL2 Gl; 
+
+    Texture textura1;
+    Texture textura2;
+    TextureData texturaData;
+
+    static GL2 Gl;
     static GLU Glu;
     GLUT glut;
-
-    public Posicao getP() {
-        return p;
-    }
-
-    public void setP(Posicao p) {
-        this.p = p;
-    }
 
     public boolean isImpacto() {
         return impacto;
@@ -63,101 +59,142 @@ public class Meteoro {
         this.impacto = impacto;
     }
 
-    public Meteoro(){
+    public Meteoro(GLAutoDrawable drawable) {
+
+        rotacao = r.nextInt(90);
+        Reset();
         
-       p = new Posicao(0, 0, 0);
-       rotacao = r.nextInt(90);
-       Reset();
-      
-       
-       
-        try {
-            InputStream stream1 = getClass().getResourceAsStream("/Texturas/asteroide1.jpg");
-            textura1 = TextureIO.newTextureData(GLProfile.getDefault(), stream1, false, "jpg");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            System.out.println("Erro na textura 1 "+ex.getMessage());
-        }
-        
-           
-        try {
-             InputStream stream2 = getClass().getResourceAsStream("/Texturas/asteroide1.jpg");
-              textura2 = TextureIO.newTextureData(GLProfile.getDefault(), stream2, false, "jpg");
-        } catch (IOException ex) {
-             ex.printStackTrace();
-            System.out.println("Erro na textura 2 "+ex.getMessage());
-        }
-            if(r.nextInt(2)==1){
- 
-                this.textura = TextureIO.newTexture(textura1);
-            }else{
-           
-                this.textura = TextureIO.newTexture(textura2);
+//        if (r.nextInt(2) == 1) {
+            try {
+                InputStream stream1 = getClass().getResourceAsStream("/Texturas/asteroide1.jpg");
+                texturaData = TextureIO.newTextureData(GLProfile.getDefault(), stream1, false, "jpg");
+                textura1 = TextureIO.newTexture(texturaData);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                System.out.println("Erro na textura 1 " + ex.getMessage());
             }
-        
-           
+  /*      } else {
+
+            try {
+                InputStream stream2 = getClass().getResourceAsStream("/Texturas/asteroide2.jpg");
+                texturaData = TextureIO.newTextureData(GLProfile.getDefault(), stream2, false, "jpg");
+                textura1 = TextureIO.newTexture(texturaData);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                System.out.println("Erro na textura 2 " + ex.getMessage());
+            }
+        }
+    */    
+        Criar(drawable);
+
     }
-    
-   
-     public void Reset() {
+
+    public void Reset() {
+
+     //   posX = r.nextInt(35) * -1;
         
-     p.x = (r.nextInt(11))*(float)Math.pow(-1, r.nextInt());
-     p.y = (r.nextInt(9)) * (float)Math.pow(-1, r.nextInt());
-     p.z = (35+ (r.nextInt(35))) * -1;
-     raio = (float)(r.nextDouble() * 2);
-     
-     if (p.x > 0)
-                incX = (float)r.nextDouble() * -1;
-            else
-                incX = (float)r.nextDouble();
+//posX = (r.nextInt(25)) * (float) Math.pow(-1, r.nextInt());
+//      posY = 5;
+//      posZ = 0;
+//       posY = (r.nextInt(20)) * (float) Math.pow(-1, r.nextInt());
+//        posZ = (30 + (r.nextInt(45))) * -1;
 
-            if (p.y > 0)
-                incY = (float)r.nextDouble() * -1;
-            else
-                incY = (float)r.nextDouble();
+//X: 0.0, Y: 8.5, Z: 9.0, Veloc 0.0
 
-            incX *= 0.03f;
-            incY *= 0.03f;
-            velocidade = (float)(r.nextDouble() * 0.1); 
-     }
-    
-     static public void Criar()
-        {
+        posX = ((r.nextInt(11))) * (float)Math.pow(-1, r.nextInt());
+        posY = (4+ (r.nextInt(35)));
+        posZ = (r.nextInt(8)) * (float)Math.pow(1, r.nextInt());
+      //  posZ = r.nextInt(8);
+        raio = (float) (r.nextDouble() * 2);
+
+        if (getPosX() > 0) {
+            incX = (float) r.nextDouble() * -1;
+           // System.out.println(" "+incX+ " if getposX1");
+        } else {
+            incX = (float) r.nextDouble();
+            //System.out.println(" "+incX+ " if getposX2");
+        }
+
+        if (getPosY() > 0) {
+            incY = (float) r.nextDouble() * -1;
+            //System.out.println(" "+incY+ " if getposY1");
+        } else {
+            incY = (float) r.nextDouble();
+            //System.out.println(" "+incY+ " if getposY2");
+        }
+
+        incX *= 0.03f;
+        incY *= 0.05f;
+        velocidade = (float) (r.nextDouble());
+    }
+
+    public void Criar(GLAutoDrawable drawable) {
+        Glu = new GLU();
+        Gl = drawable.getGL().getGL2();
+        
+        //Habilita a textura da Terra
+	textura1.enable(Gl);
+	textura1.bind(Gl);
+                
+        
+
+        lista = Gl.glGenLists(1); // Cria a lista 
+        Gl.glNewList(lista, Gl.GL_COMPILE);
+        Gl.glPushMatrix();
             GLUquadric quadratic = Glu.gluNewQuadric(); //Criar o objeto quadrico
             Glu.gluQuadricNormals(quadratic, Glu.GLU_SMOOTH);
-            Glu.gluQuadricTexture(quadratic, Boolean.TRUE);
-            
-            
-            lista = Gl.glGenLists(1); // Cria a lista 
-            Gl.glNewList(lista, Gl.GL_COMPILE);
-                Gl.glPushMatrix();
-                Gl.glRotated(270, 1, 0, 0);
-                Glu.gluSphere(quadratic, 1, 5, 5); //Criou a esfera 
-            Gl.glPopMatrix();
-            Gl.glEndList();
+            Glu.gluQuadricTexture(quadratic, true);
+            Glu.gluQuadricDrawStyle(quadratic, GLU.GLU_FILL);
+            Glu.gluQuadricOrientation(quadratic, GLU.GLU_OUTSIDE);
+            Gl.glRotated(270, 1, 0, 0);
+            Glu.gluSphere(quadratic, 1, 5, 5); //Criou a esfera 
+            Glu.gluDeleteQuadric(quadratic);
+        Gl.glPopMatrix();
+        Gl.glEndList();
+        
+        
+    }
+
+    public void Desenha(GL2 Gl) {
+        posZ += velocidade;
+        posY += incY;
+        posX += incX;
+        rotacao += 1f;
+
+        Gl.glPushMatrix();
+        Gl.glTranslatef(posX, posY, posY);
+        Gl.glRotatef(rotacao, 1, 1, 1);
+        Gl.glCallList(lista);
+        Gl.glPopMatrix();
+
+        if (getPosZ() < -8) {
+            Reset();
         }
+        //Gl.glDisable(Gl.GL_TEXTURE_2D);
+    }
 
-        public void Desenha()
-        {
-            p.z += velocidade;
-            p.y += incY;
-            p.x += incX;
-            rotacao += 1f;
+    public float getPosX() {
 
-            textura.enable(Gl);
-            textura.bind(Gl);
- 
-            Gl.glPushMatrix();
-                Gl.glTranslatef(p.x, p.y, p.z);    
-                Gl.glRotatef(rotacao, 1, 1, 1); 
-                Gl.glCallList(lista);  
-            Gl.glPopMatrix();
+        return posX;
+    }
 
-            if (p.z > 4)
-            {
-                Reset();  
-            }
-            textura.disable(Gl);
-            textura.destroy(Gl);
-        }
+    public void setPosX(float posX) {
+        this.posX = posX;
+    }
+
+    public float getPosY() {
+        return posY;
+    }
+
+    public void setPosY(float posY) {
+        this.posY = posY;
+    }
+
+    public float getPosZ() {
+        return posZ;
+    }
+
+    public void setPosZ(float posZ) {
+        this.posZ = posZ;
+    }
 }

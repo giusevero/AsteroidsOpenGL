@@ -17,8 +17,12 @@ import java.util.Random;
  */
 public class Estrela {
     
-    List<Posicao> listaEstrelas = new ArrayList<Posicao>();
-    GL2 Gl;
+    List<Posicao> listaEstrelas = new ArrayList<>();
+    
+    private float posX = 0.0f;
+    private float posY = 0.0f;
+    private float posZ = 0.0f;
+    
     
     public void criarEstrelas(int quant){
         
@@ -27,11 +31,11 @@ public class Estrela {
         
         while(count != quant){
             Posicao p = new Posicao(0,0,0);
-            p.x = (r.nextInt(110)) * (float)Math.pow(-1, r.nextInt());
-            p.y = (r.nextInt(110)) * (float)Math.pow(-1, r.nextInt()); 
-            p.z = (r.nextInt(110)) * (float)Math.pow(-1, r.nextInt());
+            posX = (r.nextInt(110)) * (float)Math.pow(-1, r.nextInt());
+            posY = (r.nextInt(110)) * (float)Math.pow(-1, r.nextInt()); 
+            posZ = (r.nextInt(110)) * (float)Math.pow(-1, r.nextInt());
             
-            if (Math.pow(Math.pow(p.x, 2) + Math.pow(p.y, 2) + Math.pow(p.z, 2), 1 / 3f) > 15)
+            if (Math.pow(Math.pow(posX, 2) + Math.pow(posY, 2) + Math.pow(posZ, 2), 1 / 3f) > 15)
                 {
                     listaEstrelas.add(p);
                     count++;
@@ -39,13 +43,13 @@ public class Estrela {
         }
     }
     
-    public void desenhaEstrela(){
-        Gl.glBegin(Gl.GL_POINTS);
+    public void desenhaEstrela(GL2 Gl){
+        Gl.glBegin(GL2.GL_POINTS);
             Gl.glColor3f(1, 1, 1);//Cor para pintar as estrelas 
             Gl.glPointSize(3); 
             
             for(Posicao pEstrela : listaEstrelas){
-                Gl.glVertex3f(pEstrela.x, pEstrela.y, pEstrela.z);
+                Gl.glVertex3f(posX, posY, posZ);
             }
         Gl.glEnd();
     }

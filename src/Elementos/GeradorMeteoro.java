@@ -8,6 +8,9 @@ package Elementos;
 import Util.Posicao;
 import java.util.ArrayList;
 import java.util.Random;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLAutoDrawable;
+import java.util.List;
 
 /**
  *
@@ -16,24 +19,27 @@ import java.util.Random;
 public class GeradorMeteoro {
     
     static Random r = new Random();
-    static ArrayList<Meteoro> listaMeteoro = new ArrayList<Meteoro>();
+    static List<Meteoro> listaMeteoro= new ArrayList<Meteoro>() ;
+    Foguete fog = new Foguete();
     
-    public static void GerarMeteoro(int quant, boolean apagar){
+    public void GerarMeteoro(GLAutoDrawable drawable, int quant, boolean apagar){
         
+        //listaMeteoro = new ArrayList<Meteoro>();
         if(apagar==true){
             listaMeteoro.clear();
-            
-            for(int i = 0; i < quant; i++){
-                listaMeteoro.add(new Meteoro());
-            }
+              
+        }else{
+            for(int i = 0; i < 1; i++){
+                listaMeteoro.add(new Meteoro(drawable));
         }
+            System.out.println(" "+listaMeteoro.size());
     }
+}
     
-    public static boolean checarColisao(Posicao pNave, float raio){
+    public static boolean checarColisao(Foguete fog, float raio){
         
         for(Meteoro meteor : listaMeteoro){
-            Posicao pMeteoro = meteor.getP();
-            if(Math.pow(Math.pow(pMeteoro.x - pNave.x, 2) + Math.pow(pMeteoro.y - pNave.y, 2) + Math.pow(pMeteoro.z - pNave.z, 2), 1 / 3f) < raio){
+            if(Math.pow(Math.pow(meteor.getPosX() - fog.getPosX(), 2) + Math.pow(meteor.getPosY() - fog.getPosY(), 2) + Math.pow(meteor.getPosZ() - fog.getPosZ(), 2), 1 / 3f) < raio){
                 if (meteor.impacto == false)
                     {
                         meteor.impacto = true;
@@ -45,11 +51,12 @@ public class GeradorMeteoro {
         return false;
     }
     
-    public static void DesenhaMeteoros()
+    public void DesenhaMeteoros(GL2 Gl)
         {
             for(Meteoro meteor : listaMeteoro)
             {
-                meteor.Desenha();  
+                meteor.Desenha(Gl);  
+                //System.out.println("PosX "+meteor.getPosX()+ "PosY "+meteor.getPosY()+ "PosZ "+meteor.getPosZ());
             }
         }
 }
