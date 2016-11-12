@@ -4,12 +4,16 @@ import Elementos.Estrela;
 import Elementos.Foguete;
 import Elementos.GeradorMeteoro;
 import Elementos.Meteoro;
+import Elementos.Pontuacao;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLAutoDrawable;
+import java.awt.BorderLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 
 public class JAsteroidsRender implements GLEventListener{
@@ -31,6 +35,7 @@ public class JAsteroidsRender implements GLEventListener{
        estrela = new Estrela();
     }
     
+    
     @Override
     public void init(GLAutoDrawable glad) {}
 
@@ -45,6 +50,8 @@ public class JAsteroidsRender implements GLEventListener{
         
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         gl.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST);
+        
+        gl.glEnable(GL2.GL_LIGHT0); //luz
         
         gl.glMatrixMode(GL2.GL_PROJECTION);        	
         gl.glLoadIdentity();
@@ -69,14 +76,15 @@ public class JAsteroidsRender implements GLEventListener{
         
         estrela.desenhaEstrela(gl);
         gl.glFlush();
-        
+     
         //para controlar a saída do console
         if(console % 30 == 0){
             System.out.println("X: " + fog.getPosX() + ", Y: " + fog.getPosY() + ", Z: " + fog.getPosZ() + ", Veloc " + fog.getVel());
             console = 0;
         }
+        
     }
-
+    
     @Override
     public void reshape(GLAutoDrawable glad, int i, int i1, int i2, int i3) {}
     

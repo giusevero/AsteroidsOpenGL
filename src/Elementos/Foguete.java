@@ -2,8 +2,15 @@ package Elementos;
 
 import Util.Posicao;
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.TextureData;
+import com.jogamp.opengl.util.texture.TextureIO;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Foguete {
     
@@ -17,7 +24,7 @@ public class Foguete {
         
         gl.glPushMatrix();
             gl.glScalef(1f, 1f, 1f);
-            gl.glTranslatef( getPosX(), getPosY()-5, getPosZ());
+            gl.glTranslatef( getPosX(), getPosY()-2.5f, getPosZ()-3);
             gl.glRotatef(0, 0.0f, 0.0f, 0.0f);
             
         //foguete
