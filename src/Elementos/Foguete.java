@@ -20,7 +20,25 @@ public class Foguete {
     public Posicao p = new Posicao(0, 0, 0);
     private float vel=0.0f;
     
+    
+    TextureData textureData;
+    Texture texturaNave;
+    
+//    private void textura(){
+//        try {
+//                InputStream stream1 = getClass().getResourceAsStream("/Texturas/texturaNave.png");
+//                textureData = TextureIO.newTextureData(GLProfile.getDefault(), stream1, false, "png");
+//                texturaNave = TextureIO.newTexture(textureData);
+//        } catch (Exception e) {
+//             e.printStackTrace();
+//             System.out.println("Erro na textura da nave: " + e.getMessage());
+//        }
+//    }
+    
+    
     public void desenhaFoguete(GL2 gl, GLUT glut){
+        
+        
         
         gl.glPushMatrix();
             gl.glScalef(1f, 1f, 1f);
@@ -29,21 +47,26 @@ public class Foguete {
             
         //foguete
             //corpo
+        
             gl.glPushMatrix();
                 gl.glScalef(1.0f, 1.0f, -3.0f);
                 gl.glTranslatef(0.0f, 0.0f, 0.0f);
+              //  glut.glutSolidCylinder(1, 1, 8, 6);
                 glut.glutWireCylinder(1, 1, 8, 6);
             gl.glPopMatrix();
+        
             //base superior
             gl.glPushMatrix();
                 gl.glScalef(1.0f, 1.0f, 0.0f);
                 gl.glTranslatef(0.0f, 0.0f, 0.0f);
+              // glut.glutSolidCone(1, 3 , 8, 8);
                 glut.glutWireCone(1, 3, 8, 8);
             gl.glPopMatrix();
             //base inferior
             gl.glPushMatrix();
                 gl.glScalef(1.0f, 1.0f, -0.01f);
                 gl.glTranslatef(0.0f, 0.0f, 300.0f);
+                //glut.glutSolidCone(1, 3, 8, 8);
                 glut.glutWireCone(1, 3, 8, 8);
             gl.glPopMatrix();
 
@@ -52,6 +75,7 @@ public class Foguete {
                 gl.glColor4f(0f,1f,1f,1f);
                 gl.glScalef(1.0f, 1.0f, 0.75f);
                 gl.glTranslatef(0.0f, 0.0f, 0.0f);
+               // glut.glutSolidCone(1, 3, 8, 8);
                 glut.glutWireCone(1, 3, 8, 8);
             gl.glPopMatrix();
             
@@ -61,18 +85,21 @@ public class Foguete {
             gl.glPushMatrix();
                 gl.glScalef(0.25f, 0.25f, -1.0f);
                 gl.glTranslatef (1.0f, 1.0f, 3.0f);
+               // glut.glutSolidCylinder(1, 0.25, 10, 1);
                 glut.glutWireCylinder(1, 0.25, 10, 1);
             gl.glPopMatrix();
             //esquerda superior
             gl.glPushMatrix();
                 gl.glScalef(0.25f, 0.25f, -1.0f);
                 gl.glTranslatef (-1.0f, 1.0f, 3.0f);
+             // glut.glutSolidCylinder(1, 0.25, 10, 1);
                 glut.glutWireCylinder(1, 0.25, 10, 1);
             gl.glPopMatrix();
             //inferior
             gl.glPushMatrix();
                 gl.glScalef(0.25f, 0.25f, -1.0f);
                 gl.glTranslatef (0.0f, -1.0f, 3.0f);
+             // glut.glutSolidCylinder(1, 0.25, 10, 1);
                 glut.glutWireCylinder(1, 0.25, 10, 1);
             gl.glPopMatrix();
             
@@ -81,22 +108,28 @@ public class Foguete {
             gl.glPushMatrix();
                 gl.glScalef(0.1f, 0.35f, -1.0f);
                 gl.glTranslatef (0.0f, 3.0f, 2.5f);
+                //glut.glutSolidCube(1.0f);
                 glut.glutWireCube(1.0f);
             gl.glPopMatrix();
             //direita
             gl.glPushMatrix();
                 gl.glScalef(0.35f, 0.1f, -1.0f);
                 gl.glTranslatef(3.0f, 0.0f, 2.5f);
+                //glut.glutSolidCube(1.0f);
                 glut.glutWireCube(1.0f);
             gl.glPopMatrix();
+            
             //esquerda
             gl.glPushMatrix();
                 gl.glScalef(0.35f, 0.1f, -1.0f);
                 gl.glTranslatef(-3.0f, 0.0f, 2.5f);
+                //glut.glutSolidCube(1.0f);
                 glut.glutWireCube(1.0f);
             gl.glPopMatrix();
-          
+        
         gl.glPopMatrix();
+        
+        
     }
     
     public float getPosX(){

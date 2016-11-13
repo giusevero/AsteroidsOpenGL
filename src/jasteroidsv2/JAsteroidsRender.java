@@ -28,6 +28,7 @@ public class JAsteroidsRender implements GLEventListener{
 //    private Meteoro meteoro;
     private Estrela estrela;
     private GeradorMeteoro meteoro = new GeradorMeteoro();
+    private Meteoro meteor;
     
     public JAsteroidsRender(){
         fog = new Foguete();
@@ -69,12 +70,15 @@ public class JAsteroidsRender implements GLEventListener{
         
         estrela.desenhaEstrela(gl);    
         meteoro.DesenhaMeteoros(gl);
-        
-        //meteoro.GerarMeteoro(glad, 2, false);
+                //meteoro.GerarMeteoro(glad, 2, false);
         controleMeteoro++;
         meteoro.GeraMeteoro(glad, controleMeteoro);
+       // meteoro.checarColisao(fog);
         
-        estrela.desenhaEstrela(gl);
+        if(meteoro.checarColisao(fog)==true){
+            gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+            display(glad);         
+        }
         gl.glFlush();
      
         //para controlar a saída do console

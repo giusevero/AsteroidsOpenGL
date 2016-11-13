@@ -197,4 +197,6 @@ public class Meteoro {
     public void setPosZ(float posZ) {
         this.posZ = posZ;
     }
+    
+    
 }

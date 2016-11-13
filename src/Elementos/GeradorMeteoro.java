@@ -44,21 +44,35 @@ public class GeradorMeteoro {
         
     }  
     
-    public static boolean checarColisao(Foguete fog, float raio){
-        
-        for(Meteoro meteor : listaMeteoro){
-            if(Math.pow(Math.pow(meteor.getPosX() - fog.getPosX(), 2) + Math.pow(meteor.getPosY() - fog.getPosY(), 2) + Math.pow(meteor.getPosZ() - fog.getPosZ(), 2), 1 / 3f) < raio){
-                if (meteor.impacto == false)
-                    {
-                        meteor.impacto = true;
-                        return true; 
-                    }
-            }
-        
-        }
-        return false;
-    }
+//    public boolean checarColisao(Foguete fog, float raio){
+//        
+//        for(Meteoro meteor : listaMeteoro){
+//            if(Math.pow(Math.pow(meteor.getPosX() - fog.getPosX(), 2) + Math.pow(meteor.getPosY() - fog.getPosY(), 2) + Math.pow(meteor.getPosZ() - fog.getPosZ(), 2), 1 / 3f) < raio){
+//                if (meteor.impacto == false)
+//                    {
+//                        meteor.impacto = true;
+//                        return true; 
+//                    }
+//            }
+//        
+//        }
+//        return false;
+//    }
     
+    public boolean checarColisao(Foguete fog){
+        Boolean impacto=false;
+        for(Meteoro meteor : listaMeteoro){
+            //Math.Pow(pAsteroide.x - pNave.x, 2) + Math.Pow(pAsteroide.y - pNave.y, 2) + Math.Pow(pAsteroide.z - pNave.z, 2), 1 / 3f
+           // Math.pow(Math.pow(meteor.getPosX()-fog.getPosX(), 2)+ Math.pow(meteor.getPosY()-fog.getPosY(), 2) + Math.pow(meteor.getPosZ()-fog.getPosZ(), 2),2/3f)
+            if(meteor.getPosX() == fog.getPosX() && meteor.getPosY()==fog.getPosY() && meteor.getPosZ()==fog.getPosZ()){
+                impacto= meteor.impacto=true;
+                System.out.println("Bateu!");
+            }else{
+                impacto=meteor.impacto =false;
+            }
+        }
+        return impacto;
+    }
     public void DesenhaMeteoros(GL2 Gl)
         {
             for(Meteoro meteor : listaMeteoro)
