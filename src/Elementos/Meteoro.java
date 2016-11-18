@@ -132,11 +132,9 @@ public class Meteoro {
         Glu = new GLU();
         Gl = drawable.getGL().getGL2();
         
-        //Habilita a textura da Terra
-	textura1.enable(Gl);
-	textura1.bind(Gl);
-                
-        
+        //Habilita a textura
+//	textura1.enable(Gl);
+//	textura1.bind(Gl);
 
         lista = Gl.glGenLists(1); // Cria a lista 
         Gl.glNewList(lista, Gl.GL_COMPILE);
@@ -153,6 +151,8 @@ public class Meteoro {
         Gl.glEndList();
         
         
+//        textura1.disable(Gl);
+        
     }
 
     public void Desenha(GL2 Gl) {
@@ -161,11 +161,16 @@ public class Meteoro {
         posX += incX;
         rotacao += 1f;
 
+        textura1.enable(Gl);
+	textura1.bind(Gl);
+        
         Gl.glPushMatrix();
-        Gl.glTranslatef(posX, posY, posY);
-        Gl.glRotatef(rotacao, 1, 1, 1);
-        Gl.glCallList(lista);
+            Gl.glTranslatef(posX, posY, posY);
+            Gl.glRotatef(rotacao, 1, 1, 1);
+            Gl.glCallList(lista);
         Gl.glPopMatrix();
+        
+        textura1.disable(Gl);
 
         if (getPosZ() < -8) {
             Reset();
