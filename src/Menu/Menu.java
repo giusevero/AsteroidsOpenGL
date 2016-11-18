@@ -79,8 +79,9 @@ public class Menu extends JFrame{
     
     private void abreAjuda(){
         JLabel lbAjuda = new JLabel("<html>W - Sobe <br>S - Desce <br>A - Esquerda <br>D - Direita <br>"+
-                "Botão esquerdo do mouse acelera <br>"+
-                "Botão direito do mouse desacelera <br> </html>", JLabel.CENTER);
+                "Botão esquerdo do mouse - Acelera <br>"+
+                "Botão direito do mouse - Desacelera <br>"+
+                "Esc - Pause </html>", JLabel.CENTER);
         
         JOptionPane.showMessageDialog(null, lbAjuda, "Ajuda", JOptionPane.PLAIN_MESSAGE);
     }
